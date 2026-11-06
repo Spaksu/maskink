@@ -22,7 +22,7 @@ jobs:
           coverage: none
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
       - name: Generate expected results from src/Engine.php
         run: php demo/test/gen-fixtures.php
       - name: Compare with demo/src/engine.js
