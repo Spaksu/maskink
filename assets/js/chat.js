@@ -121,20 +121,21 @@
   const unkHtml = u => `<span class="mk-tok mk-tok-unknown" title="${esc(t('Token not in the mapping (the model may have made it up)'))}">${esc(u)}</span>`;
 
   // ------------------------------------------------------------ small, safe Markdown
-  // Tokens are first replaced by private-use placeholders (U+E000..U+E001) and become spans after Markdown rendering.
+  // Tokens are first replaced by private-use placeholders (U+E000..U+E001) and become spans after Markdown rendering;
+  // inline code uses U+E002..U+E003 the same way.
   function md(src, slot) {
     const lines = src.replace(/\r\n?/g, '\n').split('\n');
     const html = [];
     const inline = s => {
       const codes = [];
-      s = s.replace(/`([^`\n]+)`/g, (_, x) => { codes.push(x); return '' + (codes.length - 1) + ''; });
+      s = s.replace(/`([^`\n]+)`/g, (_, x) => { codes.push(x); return '\uE002' + (codes.length - 1) + '\uE003'; });
       s = esc(s)
         .replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>')
         .replace(/(^|[^\w*])\*([^*\n]+)\*(?!\w)/g, '$1<em>$2</em>')
         .replace(/(^|[^\w])_([^_\n]+)_(?!\w)/g, '$1<em>$2</em>')
         .replace(/~~([^~\n]+)~~/g, '<del>$1</del>')
         .replace(/\[([^\]\n]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
-      return s.replace(/(\d+)/g, (_, i) => '<code>' + esc(codes[+i]) + '</code>');
+      return s.replace(/\uE002(\d+)\uE003/g, (_, i) => '<code>' + esc(codes[+i]) + '</code>');
     };
     let i = 0;
     while (i < lines.length) {
@@ -207,9 +208,9 @@
     const src = parts.map(p => {
       if (p.t !== undefined) return p.t;
       slots.push(p);
-      return '' + (slots.length - 1) + '';
+      return '\uE000' + (slots.length - 1) + '\uE001';
     }).join('');
-    return md(src).replace(/(\d+)/g, (_, k) => {
+    return md(src).replace(/\uE000(\d+)\uE001/g, (_, k) => {
       const p = slots[+k];
       return p.unknown ? unkHtml(p.unknown) : tokHtml(p.item, p.tok, masked);
     });

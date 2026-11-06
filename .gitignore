@@ -2,3 +2,6 @@ config.php
 *.log
 .claude/
 app.json
+_site/
+demo/test/.cache/
+.DS_Store

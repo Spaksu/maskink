@@ -4,6 +4,8 @@
 
 **Redact your logs, scripts and chat messages before they reach an AI, and get the real values back in the reply.**
 
+**[Try the live demo](https://spaksu.github.io/maskink/)**: no sign-up; your text and settings stay in your browser, and AI replies are simulated.
+
 > **Mask** + **ink**: like running a black marker over the sensitive lines of a document (*redaction*). The marker is in your hand, and so is the key: everything that gets inked out can be restored.
 
 Maskink replaces sensitive values in switch, firewall, NAC, server and application logs and in bash / PowerShell / Python scripts (IP addresses, hostnames, FQDNs, usernames, first.last names, passwords, API/SSH keys and more) with **consistent placeholders** such as `<IP_1>`, `<USER_2>` and `<PASS_1>`. The AI only ever sees the masked text; its reply is turned back into the real values in your browser.
@@ -15,6 +17,8 @@ Original :  Nov  2 09:14:07 web01 sshd[2211]: Accepted password for john.smith f
 Masked   :  Nov  2 09:14:07 <HOST_1> sshd[2211]: Accepted password for <USER_1> from <IP_1> port 52144
             mysql -u <USER_2> -p'<PASS_1>' -h <FQDN_1>
 ```
+
+![How it works: your browser sends real text to Maskink, the AI receives only masked text, and the masked reply is restored for you](docs/how-it-works.png)
 
 The interface is **English by default** with a **Turkish** option (one click in the top bar).
 
@@ -155,6 +159,17 @@ There is no setup wizard and no Composer.
 ## Adding a language
 
 Source strings are English. To add a language, create `lang/<code>/*.php` files that return `['English text' => 'Translation']` arrays and add the code to `I18n::LANGS` in `src/I18n.php`. PHP uses `t()` / `te()`, JavaScript uses `MK.t()`; placeholders look like `{name}`.
+
+## Live demo
+
+The demo runs the app's own pages on GitHub Pages with the masking engine ported to JavaScript (`demo/src/`), so nothing leaves the browser. Each visitor's rules and settings are kept in their own browser until they press **Reset demo**. Chat replies are simulated samples; password and AI connection changes are disabled.
+
+On every push, `demo/test/` runs `src/Engine.php` and the JavaScript port on the same inputs and blocks publishing if any result differs. If you change the engine, change both.
+
+```bash
+php demo/test/gen-fixtures.php && node demo/test/parity.mjs   # compare the engines
+php demo/build.php                                            # build the static site into _site/
+```
 
 ## Security notes
 
