@@ -180,4 +180,4 @@ php demo/build.php                                            # build the static
 
 ## License
 
-Maskink is released under the [MIT License](LICENSE). Bundled third-party components (Tailwind CSS and Tesseract.js in `assets/`) remain under their own licenses.
+Copyright © 2026 Spaksu. Maskink is released under the [MIT License](LICENSE). Bundled third-party components (Tailwind CSS and Tesseract.js in `assets/`) remain under their own licenses.
