@@ -290,6 +290,7 @@ ozel.kisi | USER</pre>
   <tbody>
     <tr><td>vLLM ağ geçidi</td><td><code>{adres}/v1/models</code></td><td><code>{adres}/&lt;model-yolu&gt;/v1/chat/completions</code> – model yolu addan üretilir: <code>Qwen3.8-27B</code> → <code>qwen3-8-27b</code></td></tr>
     <tr><td>Ollama</td><td><code>{adres}/models</code>, olmazsa <code>{adres}/api/tags</code></td><td><code>{adres}/v1/chat/completions</code></td></tr>
+    <tr><td>NVIDIA API</td><td><code>{adres}/v1/models</code></td><td><code>{adres}/v1/chat/completions</code> – adres varsayılan olarak <code>https://integrate.api.nvidia.com</code>; sona yapıştırılan <code>/v1</code> yok sayılır. <code>nvapi-…</code> anahtarı gerekir. Katalog her hesapta çalışmayan modelleri de listeler (404 döner); elle model listesi kullanın.</td></tr>
     <tr><td>OpenAI uyumlu</td><td><code>{adres}/models</code></td><td><code>{adres}/chat/completions</code> – tek bir vLLM modeli, OpenAI, LM Studio, LiteLLM vb.</td></tr>
   </tbody>
 </table></div>

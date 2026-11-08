@@ -22,6 +22,7 @@ return [
     'vLLM gateway (one path per model)' => 'vLLM ağ geçidi (model başına yol)',
     'Ollama' => 'Ollama',
     'OpenAI compatible (single endpoint)' => 'OpenAI uyumlu (tek uç nokta)',
+    'NVIDIA API (build.nvidia.com)' => 'NVIDIA API (build.nvidia.com)',
     'Connection not found.' => 'Bağlantı bulunamadı.',
     'The name must be 1-60 characters.' => 'Ad 1-60 karakter olmalı.',
     'The address must start with http:// or https://.' => 'Adres http:// veya https:// ile başlamalı.',

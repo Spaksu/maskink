@@ -291,6 +291,7 @@ special.person | USER</pre>
   <tbody>
     <tr><td>vLLM gateway</td><td><code>{address}/v1/models</code></td><td><code>{address}/&lt;model-path&gt;/v1/chat/completions</code> – the model path is derived from the name: <code>Qwen3.8-27B</code> → <code>qwen3-8-27b</code></td></tr>
     <tr><td>Ollama</td><td><code>{address}/models</code>, falling back to <code>{address}/api/tags</code></td><td><code>{address}/v1/chat/completions</code></td></tr>
+    <tr><td>NVIDIA API</td><td><code>{address}/v1/models</code></td><td><code>{address}/v1/chat/completions</code> – the address defaults to <code>https://integrate.api.nvidia.com</code>; a pasted trailing <code>/v1</code> is ignored. Needs an <code>nvapi-…</code> key. The catalogue lists models that are not deployed for every account (they answer 404), so use a manual model list.</td></tr>
     <tr><td>OpenAI compatible</td><td><code>{address}/models</code></td><td><code>{address}/chat/completions</code> – a single vLLM model, OpenAI, LM Studio, LiteLLM, etc.</td></tr>
   </tbody>
 </table></div>

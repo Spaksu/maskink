@@ -13,6 +13,7 @@ final class Llm
         'vllm_gateway' => 'vLLM gateway (one path per model)',
         'ollama'       => 'Ollama',
         'openai'       => 'OpenAI compatible (single endpoint)',
+        'nvidia'       => 'NVIDIA API (build.nvidia.com)',
     ];
 
     // ------------------------------------------------------------------ connections
@@ -28,13 +29,24 @@ final class Llm
         return array_values(array_map([self::class, 'normalize'], $list));
     }
 
+    /** Address without a trailing slash; NVIDIA defaults to its hosted API and drops a pasted "/v1" (the type adds it) */
+    private static function normalizeBase(array $c): string
+    {
+        $b = rtrim((string)($c['base_url'] ?? ''), '/');
+        if (($c['type'] ?? '') === 'nvidia') {
+            $b = preg_replace('#/v1$#', '', $b) ?? $b;
+            return $b !== '' ? $b : 'https://integrate.api.nvidia.com';
+        }
+        return $b;
+    }
+
     private static function normalize(array $c): array
     {
         return [
             'id'          => (string)($c['id'] ?? ''),
             'name'        => (string)($c['name'] ?? ''),
             'type'        => isset(self::TYPES[$c['type'] ?? '']) ? $c['type'] : 'openai',
-            'base_url'    => rtrim((string)($c['base_url'] ?? ''), '/'),
+            'base_url'    => self::normalizeBase($c),
             'api_key'     => (string)($c['api_key'] ?? ''),
             'models_mode' => ($c['models_mode'] ?? 'auto') === 'manual' ? 'manual' : 'auto',
             'models'      => (string)($c['models'] ?? ''),
@@ -254,7 +266,7 @@ final class Llm
                 }
             }
         } else {
-            $j = self::getJson($c, $c['base_url'] . ($c['type'] === 'vllm_gateway' ? '/v1/models' : '/models'));
+            $j = self::getJson($c, $c['base_url'] . (in_array($c['type'], ['vllm_gateway', 'nvidia'], true) ? '/v1/models' : '/models'));
             foreach ((array)($j['data'] ?? []) as $m) {
                 if (($m['id'] ?? '') !== '') {
                     $found[] = [(string)$m['id'], (int)($m['max_model_len'] ?? $m['context_length'] ?? 0), false];
@@ -334,7 +346,7 @@ final class Llm
     {
         return match ($c['type']) {
             'vllm_gateway' => $c['base_url'] . '/' . self::slug($model) . '/v1/chat/completions',
-            'ollama'       => $c['base_url'] . '/v1/chat/completions',
+            'ollama', 'nvidia' => $c['base_url'] . '/v1/chat/completions',
             default        => $c['base_url'] . '/chat/completions',
         };
     }

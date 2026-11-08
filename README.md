@@ -79,7 +79,7 @@ Which token stands for which value, how often it occurs and which rule caught it
 
 ### AI chat
 - Messages are masked on the server and **only the masked history** goes to the model; replies stream over SSE and are restored in the browser.
-- **vLLM gateway**, **Ollama** and **OpenAI-compatible** connections (OpenAI, LM Studio, LiteLLM, …).
+- **vLLM gateway**, **Ollama**, **NVIDIA API** and **OpenAI-compatible** connections (OpenAI, LM Studio, LiteLLM, …).
 - Multiple connections, ordering, automatic or manual model lists, exclude and ordering rules.
 - **Screenshots:** text in images is read with OCR in the browser (local Tesseract.js) and sensitive areas are covered with their tokens; an editor lets you mask or unmask by hand.
 - Chats and mappings are kept only in the browser (localStorage), never on the server. API keys are never sent to the browser.

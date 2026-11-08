@@ -612,6 +612,7 @@
   const aiUrls = (type, base) => {
     const b = (base || '').replace(/\/+$/, '') || 'https://…';
     return type === 'vllm_gateway' ? [b + '/v1/models', b + '/<model>/v1/chat/completions']
+      : type === 'nvidia' ? [(base ? b : 'https://integrate.api.nvidia.com') + '/v1/models', (base ? b : 'https://integrate.api.nvidia.com') + '/v1/chat/completions']
       : type === 'ollama' ? [b + '/models', b + '/v1/chat/completions']
         : [b + '/models', b + '/chat/completions'];
   };
