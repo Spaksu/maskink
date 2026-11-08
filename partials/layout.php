@@ -97,7 +97,7 @@ function mk_foot(array $scripts = []): void
     ?>
 </main>
 <footer class="border-t border-slate-200 py-3 text-center text-xs text-slate-400 dark:border-slate-800">
-  <?= MK_APP ?> v<?= h(MK_VERSION) ?> · <?= h(t('Inputs are not stored on the server; the AI only receives masked text; the mapping table is kept only in your browser.')) ?>
+  <?= MK_APP ?> v<?= h(MK_VERSION) ?> · © 2026 Spaksu · <?= h(t('Inputs are not stored on the server; the AI only receives masked text; the mapping table is kept only in your browser.')) ?>
 </footer>
 </div>
 <div id="toasts" class="pointer-events-none fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2"></div>
